@@ -10,7 +10,7 @@ class Launcher(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowFlags(Qt.Tool | Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.Tool | Qt.FramelessWindowHint )
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setWindowTitle("AI Assistant")
         self.setStyleSheet("""
@@ -30,6 +30,10 @@ class Launcher(QDialog):
         screen_btn = QPushButton("🖥 Screen")
         screen_btn.clicked.connect(self.handle_screen)
         layout.addWidget(screen_btn)
+
+        doodle_btn = QPushButton("✏ Doodle")
+        doodle_btn.clicked.connect(self.handle_doodle)
+        layout.addWidget(doodle_btn)
         
         self.setLayout(layout)
         self.adjustSize()
@@ -46,6 +50,12 @@ class Launcher(QDialog):
 
     def show_launcher(self):
         self.show_signal.emit()
+
+    def handle_doodle(self):
+        self.hide()
+        from .doodle_window import DoodleWindow
+        self.doodle_win = DoodleWindow()
+        self.doodle_win.show()
 
     def handle_screen(self):
         self.hide()
